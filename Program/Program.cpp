@@ -23,7 +23,7 @@ public:
 		head = nullptr;
 	}
 	
-	void push_front(T data)
+	void Pushfront(T data)
 	{
 
 
@@ -46,6 +46,89 @@ public:
 
 		size++;
 	}
+
+	void Popfront()
+	{
+		if (head == nullptr)
+		{
+			cout << "Linked List is Empty" << endl;
+		}
+		else
+		{
+			Node* deleteNode = head;
+
+			head = deleteNode->next;
+
+			delete deleteNode;
+
+			size--;
+		}		
+	}
+
+	void Pushback(T data)
+	{		
+		if (head == nullptr)
+		{			
+			head = new Node;
+
+			head->data = data;
+			head->next = nullptr;
+		}
+		else
+		{
+			Node* currentNode = head;
+			while (currentNode->next != nullptr)
+			{				
+				currentNode = currentNode->next;
+			}
+			
+			Node* newNode = new Node;
+
+			currentNode->next = newNode;
+
+			newNode->data = data;
+			newNode->next = nullptr;
+		}
+		size++;
+	}
+	void Show()
+	{
+		Node* currentNode = head;
+		while (currentNode != nullptr)
+		{
+			cout << currentNode->data << " ";
+			currentNode = currentNode->next;		
+		}
+		
+	}
+	void Popback()
+	{
+		if (head == nullptr)
+		{
+			cout << "Linked List is Empty" << endl;
+		}
+		else if (head->next == nullptr)
+		{
+			head = nullptr;
+
+			delete head;
+		}
+		else
+		{
+			Node* currentNode = head;
+			
+			Node* PreviousNode = nullptr;
+			while (currentNode->next != nullptr)
+			{
+				PreviousNode = currentNode;
+				currentNode = currentNode->next;
+			}
+			delete currentNode;
+			PreviousNode->next = nullptr;
+		}
+
+		size--;
+	}
 };
 
 
@@ -54,7 +137,24 @@ int main()
 {
 	SingleLinkedList<int> singleLinkedList;
 
-	singleLinkedList.push_front(10);
-	singleLinkedList.push_front(20);  //  [20] <------ [10]
-    
+	singleLinkedList.Pushfront(10);
+	singleLinkedList.Pushfront(20);
+		
+	singleLinkedList.Pushback(5);
+	singleLinkedList.Pushback(0);
+	    
+	singleLinkedList.Show();
+
+	singleLinkedList.Popback();
+	cout << endl;
+	singleLinkedList.Show();
+
+	singleLinkedList.Popback();
+	cout << endl;
+	singleLinkedList.Show();
+
+	singleLinkedList.Popfront();
+	singleLinkedList.Popfront();
+	
+	return 0;
 }
