@@ -2,10 +2,10 @@
 
 using namespace std;
 
-#define SIZE 5
+#define SIZE 6
 
-template<typename T>
-class LinearQueue
+template <typename T>
+class CircleQueue
 {
 private:
 	int front;
@@ -13,65 +13,89 @@ private:
 	int size;
 	T container[SIZE];
 public:
-	LinearQueue()
+	CircleQueue()
 	{
-		front = 0;
-	    rear = 0;
+		front = SIZE - 1;
+		rear = SIZE - 1;
 		size = 0;
 		for (int i = 0; i < SIZE; i++)
 		{
 			container[i] = NULL;
 		}
 	}
+
 	void Push(T data)
 	{
-		if (rear >= SIZE)
+		if (front == (rear +1) % SIZE)	
 		{
-			cout << "Linear Queue Overflow" << endl;
+			cout << "Circle Queue Overflow" << endl;
 		}
 		else
 		{
-			container[rear++] = data;
-
+			rear = (rear + 1) % SIZE;
+		 	container[rear] = data;
 			size++;
 		}
 	}
-	
+
 	void Pop()
 	{
 		if (Empty())
 		{
-			cout << "Linear Queue is Empty" << endl;
+			cout << "Circle Queue is Empty" << endl;
 		}
 		else
-		{
-			front++;
+		{			
+			front = (front + 1) % SIZE;
+			container[front] = NULL;
 			size--;
 		}
-
 	}
 
-	bool Empty
+	bool Empty()
 	{
-		if (rear <= 0)
+		if (front == rear)
 		{
 			return true;
 		}
 		else
 		{
 			return false;
-		}		
+		}
+	}
+
+	int& Size()
+	{
+		return size;
+	}
+
+	T& Front()
+	{
+		return container[(front + 1) % SIZE];
 	}
 };
 
 int main()
 {
-	LinearQueue<int> linearQueue;
+	CircleQueue<char> circleQueue;
 	
-	linearQueue.Push(10);
-	linearQueue.Push(20);
-	linearQueue.Pop();
-	linearQueue.Pop();
-	linearQueue.Pop();
+	circleQueue.Push('A');
+	circleQueue.Push('B');
+	circleQueue.Push('C');
+	circleQueue.Push('D');
+	
+	while (circleQueue.Empty() == false)
+	{
+		cout << circleQueue.Front() << endl;
+
+		circleQueue.Pop();
+	}
+	
+	circleQueue.Push('E');
+	circleQueue.Push('F');
+	circleQueue.Push('G');
+	circleQueue.Push('H');
+
+	
 	return 0;
 }
