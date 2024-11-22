@@ -2,65 +2,85 @@
 
 using namespace std;
 
-#define SIZE 6
-
-template <typename T>
-class CircleQueue
+template<typename T>
+class Vector
 {
 private:
-	int front;
-	int rear;
+	T* container;
 	int size;
-	T container[SIZE];
+	int capacity;
 public:
-	CircleQueue()
+	Vector()
 	{
-		front = SIZE - 1;
-		rear = SIZE - 1;
 		size = 0;
-		for (int i = 0; i < SIZE; i++)
+		capacity = 0;
+		container = nullptr;
+	}
+
+	~Vector()
+	{
+		if (container != nullptr)
 		{
-			container[i] = NULL;
+			delete[] container;
 		}
 	}
 
-	void Push(T data)
+	void Resize(int newSize)
 	{
-		if (front == (rear +1) % SIZE)	
+		// 1. capacity에 새로운 size값을 저장합니다.
+		capacity = newSize;
+
+		// 2. 새로운 포인터 변수를 생성해서 새롭게 만들어진
+		//    메모리 공간을 가리키도록 합니다.
+		T* newContainer = new T[capacity];
+
+		// 3. 새로운 메모리 공간의 값을 초기화합니다.
+		for (int i = 0; i < capacity; i++)
 		{
-			cout << "Circle Queue Overflow" << endl;
+			newContainer[i] = NULL;
 		}
-		else
+
+		// 4. 기존 배열에 있는 값을 복사해서 새로운 배열
+		//    에 넣어줍니다.
+		for (int i = 0; i < size; i++)
 		{
-			rear = (rear + 1) % SIZE;
-		 	container[rear] = data;
-			size++;
+			newContainer[i] = container[i];
 		}
+
+		// 5. 기존 배열의 메모리를 해제합니다.
+		if (container != nullptr)
+		{
+			delete[] container;
+		}
+
+		// 6. 기존에 배열을 가리키면 포인터 변수의 값을
+		//    새로운 배열의 시작 주소로 가리킵니다.
+		container = newContainer;
 	}
 
-	void Pop()
-	{
-		if (Empty())
+	void PushBack(T data)
+	{		
+		if (capacity <= 0)
 		{
-			cout << "Circle Queue is Empty" << endl;
+			Resize(1);
 		}
-		else
-		{			
-			front = (front + 1) % SIZE;
-			container[front] = NULL;
-			size--;
+		else if (size >= capacity)
+		{
+			Resize(capacity * 2);
 		}
+
+		container[size++] = data;
 	}
 
-	bool Empty()
+	void PopBack()
 	{
-		if (front == rear)
+		if (size <= 0)
 		{
-			return true;
+			cout << "Vector is Empty" << endl;						
 		}
 		else
 		{
-			return false;
+			container[--size] = NULL;
 		}
 	}
 
@@ -69,33 +89,28 @@ public:
 		return size;
 	}
 
-	T& Front()
+	T& operator[](int index)
 	{
-		return container[(front + 1) % SIZE];
+		return container[index];
+	}
+
+	void Reserve(int newSize)
+	{
+		
 	}
 };
 
 int main()
 {
-	CircleQueue<char> circleQueue;
-	
-	circleQueue.Push('A');
-	circleQueue.Push('B');
-	circleQueue.Push('C');
-	circleQueue.Push('D');
-	
-	while (circleQueue.Empty() == false)
-	{
-		cout << circleQueue.Front() << endl;
+	Vector<int> vector;
 
-		circleQueue.Pop();
-	}
-	
-	circleQueue.Push('E');
-	circleQueue.Push('F');
-	circleQueue.Push('G');
-	circleQueue.Push('H');
-
+	vector.PushBack(10);
+	vector.PushBack(20);
+	vector.PushBack(30);
+	vector.PushBack(40);
+	vector.PushBack(50);
+		
+	vector.PopBack();
 	
 	return 0;
 }
