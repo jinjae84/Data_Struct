@@ -52,6 +52,28 @@ public:
 		}
 	}
 
+	void Append(const char* word)
+	{
+		int newSize = strlen(container) + strlen(word);
+				
+		char* newContainer = new char[newSize];
+
+		for (int i = 0; i < strlen(container); i++)
+		{
+			newContainer[i] = container[i];
+		}
+
+		for (int i = 0; i < strlen(word); i++)
+		{
+			newContainer[strlen(container) + i] = word[i];
+		}
+		size = newSize;
+
+		delete [] container;
+
+		container = newContainer;				
+	}
+
 	int& Size()
 	{
 		return size;
@@ -60,6 +82,50 @@ public:
 	char& operator[](const int& index)
 	{
 		return container[index];
+	}
+
+	int Compare(const char* word)
+	{
+		int count = 0;
+
+		for (int i = 0; i < strlen(word); i++)
+		{
+			if (container[i] != word[i])
+			{
+				break;
+			}
+			else
+			{
+				count++;
+			}
+		}
+
+		if (strlen(word) == count)
+		{
+			return 0;
+		}
+		
+		int classString = 0;
+		int otherString = 0;
+
+		for (int i = 0; i < strlen(container); i++)
+		{
+			classString += container[i];
+		}
+
+		for (int i = 0; i < strlen(word); i++)
+		{
+			otherString += word[i];
+		}
+		
+		if (classString > otherString)
+		{
+			return 1;
+		}
+		else
+		{
+			return -1;
+		}
 	}
 };
 
@@ -76,10 +142,13 @@ int main()
 	cout << endl;
 
 	string = "Bard";
-	for (int i = 0; i < string.Size(); i++)
+
+	string.Append(" Character");
+	for (int  i = 0; i < string.Size(); i++)
 	{
 		cout << string[i] << "";
 	}
 	cout << endl;
+	
 	return 0;
 }
