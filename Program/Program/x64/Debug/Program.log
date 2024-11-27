@@ -1,5 +1,2 @@
 ﻿  Program.cpp
-C:\Users\명진재\Desktop\Data_Struct\Program\Program.cpp(27,17): warning C4267: '초기화 중': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\명진재\Desktop\Data_Struct\Program\Program.cpp(29,16): warning C4267: '=': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\명진재\Desktop\Data_Struct\Program\Program.cpp(57,15): warning C4267: '초기화 중': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
   Program.vcxproj -> C:\Users\명진재\Desktop\Data_Struct\Program\x64\Debug\Program.exe
