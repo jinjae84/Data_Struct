@@ -1,94 +1,37 @@
 ﻿#include <iostream>
 
-#define SIZE 8
+#define SIZE 10
 
 using namespace std;
 
 template<typename T>
-class Heap
+class AdjacencyMatrix
 {
-private:
-	int index;
-	T container[SIZE];
+private:	
+	int numVertex;             // 정접의 개수
+	T vertex[SIZE];            // 정점의 집합
+	int matrix[SIZE][SIZE];    // 인접 행렬
+
 public:
-	Heap()
+	AdjacencyMatrix()
 	{
+		size = 0;
+
 		for (int i = 0; i < SIZE; i++)
 		{
-			container[i] = 0;
-		}
+			vertex[i] = NULL;
 
-		index = 0;
-	}
-
-	void Insert(T data)
-	{
-		if (index + 1 >= SIZE)
-		{
-			cout << " Heap Overflow" << endl;
-		}
-		else
-		{			
-			container[++index] = data;
-			
-			int child = index;
-
-			int parent = child / 2;
-
-			while (child > 1)
+			for (int j = 0; j < SIZE; j++)
 			{
-				if (container[parent] < container[child])
-				{
-					std::swap(container[parent], container[child]);
-				}
-
-				child = parent;
-
-				parent = child / 2;
+				matrix[i][j] = 0;
 			}
-		}		
-	}
-
-	T Remove()
-	{
-		if (index == 0)
-		{
-			cout << "Heap Underflow" << endl;
-		}
-
-		container[1] = container[index--];
-
-		int parent = 1;
-
-		int leftchild = 2 * parent;
-
-		int rightchild = 2 * parent + 1;
-
-		while ()
-		{
-
-		}
-	}
-
-	void Show()
-	{
-		for (int i = 1; i <= index; i++)
-		{
-			cout << container[i] << " ";
 		}
 	}
 };
 
 int main()
 {
-	Heap<int> heap;
+	AdjacencyMatrix<int> adjacencyMatrix;
 
-	heap.Insert(5);
-	heap.Insert(7);
-	heap.Insert(9);
-	heap.Insert(15);
-	
-	heap.Show();
-	
 	return 0;
 }
