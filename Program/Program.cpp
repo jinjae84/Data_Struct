@@ -5,25 +5,56 @@
 using namespace std;
 
 template<typename T>
-class AdjacencyMatrix
+class AdjacencyList
 {
 private:	
-	int numVertex;             // 정접의 개수
-	T vertex[SIZE];            // 정점의 집합
-	int matrix[SIZE][SIZE];    // 인접 행렬
+	struct Node
+	{
+		T data;
+		Node* next;
+
+		Node(T data, Node* link = nullptr)
+		{
+			this->data = data;
+			next = link;
+		}
+	};
+
+	int size;                    // 정점의 개수
+	T vertex[SIZE];              // 정점의 집합
+	Node* list[SIZE];            // 인접 리스트 
 
 public:
-	AdjacencyMatrix()
+	AdjacencyList()
 	{
 		size = 0;
 
 		for (int i = 0; i < SIZE; i++)
 		{
+			list[i] = NULL;
 			vertex[i] = NULL;
+		}
+	}
 
-			for (int j = 0; j < SIZE; j++)
+	void Insert(T data)
+	{
+		if (size >= SIZE)
+		{
+			cout << "Adjacency List Overflow" << endl;
+		}
+		else
+		{
+			vertex[size++] = data;
+		}
+	}
+
+	~AdjacencyList()
+	{
+		for (int i = 0; i < SIZE; i++)
+		{
+			if (list[i] != nullptr)
 			{
-				matrix[i][j] = 0;
+				delete[] list[i];
 			}
 		}
 	}
@@ -31,7 +62,9 @@ public:
 
 int main()
 {
-	AdjacencyMatrix<int> adjacencyMatrix;
+	AdjacencyList<char> adcacencyList;
+
+
 
 	return 0;
 }
