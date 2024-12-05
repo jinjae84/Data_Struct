@@ -1,70 +1,120 @@
 ﻿#include <iostream>
 
-#define SIZE 10
-
 using namespace std;
 
 template<typename T>
-class AdjacencyList
+class BinarySearchTree
 {
-private:	
+private:
 	struct Node
 	{
 		T data;
-		Node* next;
 
-		Node(T data, Node* link = nullptr)
-		{
-			this->data = data;
-			next = link;
-		}
+		Node* left;
+		Node* right;
 	};
 
-	int size;                    // 정점의 개수
-	T vertex[SIZE];              // 정점의 집합
-	Node* list[SIZE];            // 인접 리스트 
-
+	Node* root;
 public:
-	AdjacencyList()
+	BinarySearchTree()
 	{
-		size = 0;
+		root = nullptr;
+	}
 
-		for (int i = 0; i < SIZE; i++)
-		{
-			list[i] = NULL;
-			vertex[i] = NULL;
-		}
+	~BinarySearchTree()
+	{
+		
+	}
+
+	Node * RootNode()
+	{
+		return root;
+	}
+
+	Node* CreateNode(T data)
+	{
+		Node* newNode = new Node();
+
+		newNode->data = data;
+
+		newNode->left = nullptr;
+
+		newNode->right = nullptr;
+
+		return newNode;
 	}
 
 	void Insert(T data)
 	{
-		if (size >= SIZE)
+		if (root == nullptr)
 		{
-			cout << "Adjacency List Overflow" << endl;
+			root = CreateNode(data);
 		}
 		else
 		{
-			vertex[size++] = data;
-		}
+			Node* currentNode = root;
+
+			while (currentNode != nullptr)
+			{
+				if (currentNode->data == data)
+				{
+					return;
+				}
+				else if (currentNode->data > data)
+				{
+					if (currentNode->left == nullptr)
+					{
+						currentNode->left = CreateNode(data);
+						break;
+					}
+					else
+					{
+						currentNode = currentNode->left;
+					}
+				}
+				else
+				{
+					if (currentNode->right == nullptr)
+					{
+						currentNode->right = CreateNode(data);
+						break;
+					}
+					else
+					{
+						currentNode = currentNode->right;
+					}
+				}
+			}
+		}		
 	}
 
-	~AdjacencyList()
+	void Inorder(Node * root)
 	{
-		for (int i = 0; i < SIZE; i++)
+		if (root == nullptr)
 		{
-			if (list[i] != nullptr)
-			{
-				delete[] list[i];
-			}
+			return;
+		}
+		else
+		{
+			Inorder(root->left);
+
+			cout << root->data << " ";
+
+			Inorder(root->right);
 		}
 	}
 };
 
 int main()
 {
-	AdjacencyList<char> adcacencyList;
+	BinarySearchTree<int> binarySearchTree;
 
+	binarySearchTree.Insert(15);
+	binarySearchTree.Insert(7);
+	binarySearchTree.Insert(9);
+	binarySearchTree.Insert(20);
 
+	
 
 	return 0;
 }
